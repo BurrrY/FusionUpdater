@@ -41,9 +41,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
-#ifdef __linux
-    ui->cb_useNightly->setEnabled(false);
-#endif
+    #ifdef __linux
+        ui->cb_useNightly->setEnabled(false);
+    #endif
 }
 
 MainWindow::~MainWindow()
@@ -98,14 +98,8 @@ void MainWindow::downloadClient(FusionSources source)
     case srcStable:
         request.setUrl(QUrl(UPDATER_LATES_STABLE));
         break;
-     case srcStable_Alt:
-         request.setUrl(QUrl(UPDATER_LATES_STABLE_ALT));
-         break;
      case srcNightly:
          request.setUrl(QUrl(UPDATER_LATES_NIGHTLY));
-         break;
-     case srcNightly_Alt:
-         request.setUrl(QUrl(UPDATER_LATES_NIGHTLY_ALT));
          break;
     default:
         return;
@@ -138,8 +132,8 @@ void MainWindow::replyFinished(QNetworkReply *reply)
         ui->progressBar->setValue(0);
         return;
     }
-    else if(reply->url() != QString(UPDATER_LATES_STABLE) && reply->url() != QString(UPDATER_LATES_STABLE_ALT)
-            && reply->url() != QString(UPDATER_LATES_NIGHTLY) && reply->url() != QString(UPDATER_LATES_NIGHTLY_ALT))
+    else if(reply->url() != QString(UPDATER_LATES_STABLE)
+            && reply->url() != QString(UPDATER_LATES_NIGHTLY))
     {
 
         MainWindow::consoleOut("[ERROR] Client reply URL does not match real client URL.");
